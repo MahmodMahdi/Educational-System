@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title> Educational System</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/ITI_Project.styles.css" asp-append-version="true" />
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+			<img src="~/Image/first-rateeducationsystem.png" style="width:65px" />
+			<ul class="navbar-nav flex-grow-1">
+				<li class="nav-item">
+					<a class="nav-link btn btn-outline-primary" asp-controller="Department" asp-action="Index">Departments</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link btn btn-outline-primary" asp-controller="Instructor" asp-action="Index">Instructors</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link btn btn-outline-primary" asp-controller="Course" asp-action="Index">Courses</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link btn btn-outline-primary" asp-controller="CourseResult" asp-action="Index">Results</a>
+				</li>
+				@if (User.IsInRole("Admin") || User.IsInRole("Instructor"))
+				{
+					<li class="nav-item">
+						<a class="nav-link btn btn-outline-primary" asp-controller="Trainee" asp-action="Index">Trainees</a>
+					</li>
+				}
+				@if (User.IsInRole("Admin"))
+				{
+					<li class="nav-item">
+						<a class="nav-link btn btn-outline-primary" asp-controller="Role" asp-action="GetRoles">Manage Roles</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link btn btn-outline-primary" asp-controller="Account" asp-action="Index">Manage Users</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link btn btn-outline-primary" asp-controller="Account" asp-action="AddAdmin">Add Admin</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link btn btn-outline-primary" asp-controller="Account" asp-action="AddInstructor">Add Instructor</a>
+					</li>
+				}
+			</ul>
+			<ul class="navbar-nav">
+				@if (User.Identity?.IsAuthenticated == false)
+				{
+					<li class="nav-item">
+						<a class="nav-link btn btn-outline-primary" asp-controller="Account" asp-action="Login"> Login </a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link btn btn-outline-primary" asp-controller="Account" asp-action="Register"> Register</a>
+					</li>
+				}
+				else
+				{
+					<li class="nav-item">
+						<a class="nav-link btn fw-bold" asp-controller="Account" asp-action="Logout"> Log Out </a>
+					</li>
+					@*  <li class="nav-item">
+				<a class="nav-link btn fw-bold" href="#">Welcome @User.Identity?.Name </a>
+				</li>*@
+				}
+			</ul>
+
+		</nav>
+	</header>
+	<br />
+	<div class="container">
+
+		<main role="main" class="pb-3">
+			@if (TempData["successMessageForAddingRole"] != null)
+			{
+				<div class="alert alert-success">
+					<b>Success : </b>@TempData["successMessageForAddingRole"]
+					<button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+				</div>
+			}
+			@if (TempData["successMessageForAddingCourse"] != null)
+			{
+				<div class="alert alert-success">
+					<b>Success : </b>@TempData["successMessageForAddingCourse"]
+					<button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+				</div>
+			}
+			@if (TempData["successMessageForEditCourse"] != null)
+			{
+				<div class="alert alert-success">
+					<b>Success : </b>@TempData["successMessageForEditCourse"]
+					<button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+				</div>
+			}
+			@if (TempData["successMessageForDeleteCourse"] != null)
+			{
+				<div class="alert alert-success">
+					<b>Success : </b>@TempData["successMessageForDeleteCourse"]
+					<button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+				</div>
+			}
+
+			@if (TempData["successMessageForAddingResult"] != null)
+			{
+				<div class="alert alert-success">
+					<b>Success : </b>@TempData["successMessageForAddingResult"]
+					<button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+				</div>
+			}
+			@if (TempData["successMessageForEditResult"] != null)
+			{
+				<div class="alert alert-success">
+					<b>Success : </b>@TempData["successMessageForEditResult"]
+					<button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+				</div>
+			}
+			@if (TempData["successMessageForAddingTrainee"] != null)
+			{
+				<div class="alert alert-success">
+					<b>Success : </b>@TempData["successMessageForAddingTrainee"]
+					<button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+				</div>
+			}
+			@if (TempData["successMessageForEditTrainee"] != null)
+			{
+				<div class="alert alert-success">
+					<b>Success : </b>@TempData["successMessageForEditTrainee"]
+					<button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+				</div>
+			}
+			@if (TempData["successMessageForDeleteTrainee"] != null)
+			{
+				<div class="alert alert-success">
+					<b>Success : </b>@TempData["successMessageForDeleteTrainee"]
+					<button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+				</div>
+			}
+			@RenderBody()
+		</main>
+	</div>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

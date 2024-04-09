@@ -1,0 +1,114 @@
+﻿@using DataAccessLayer.Authentication
+@model List<ApplicationUser>
+@{
+	ViewData["Title"] = "Index";
+	var user = Model;
+	Layout = "MyLayout";
+}
+<hr />
+<h2 class="text-center" id="#">@user.Count users</h2>
+<hr>
+@if (!Model.Any())
+{
+	<div class="alert alert-warning">Nothing added yet!</div> 	@if (User.IsInRole("Admin"))
+	{
+		<div class="text-center ">
+			<a asp-controller="Account" asp-action="Register" class="bi bi-pen btn btn-success">Add new user</a>
+		</div>
+	} 
+}
+else
+{
+	<div class="container-xl">
+		<div class="table-responsive">
+			<div class="table-wrapper">
+				<table class="table table-hover  table-bordered m-4 fw-bold table-striped" id="pagination_example" style="background-color:lightgray">
+					<tr style="border-bottom:3px">
+						<th colspan="6"> <h2 style="color:darkred">Manage users</h2></th>
+						<th>
+						@if (User.IsInRole("Admin"))
+							{
+								<div class="text-center">
+									<a asp-controller="Account" asp-action="Search" class="btn fw-bold btn-outline-dark">Search</a>
+									<a asp-controller="Account" asp-action="Register" class="bi bi-pen btn btn-success">Add New User</a>
+								</div>
+							} 
+						</th>
+					</tr>
+					<tr style="font-size:22px">
+						<th class="text-center">#</th>
+						<th class="text-center">First Name</th>
+						<th class="text-center">Last Name</th>
+						<th class="text-center">Role</th>
+						<th class="text-center">Address</th>
+						<th class="text-center">Email</th>
+						<th class="text-center">Action</th>
+					</tr>
+					@for (int i = 0; i < user.Count; i++)
+					{
+						<tr class="text-center">
+							<td>@(i + 1)</td>
+							<td>@(user[i]?.FirstName)</td>
+							<td>@(user[i]?.LastName)</td>
+							<td>@(user[i]?.Role)</td> 
+							<td>@(user[i]?.Address)</td>
+							<td>@(user[i]?.Email)</td>
+							<td>
+								@if (User.IsInRole("Admin"))
+								{
+									<a asp-controller="Account" asp-action="Delete" asp-route-id="@user[i].Id" class="bi bi-trash btn btn-danger btn-sm" aria-hidden="true" onclick="return confirm('Are you Sure to Delete ?')">Delete</a>
+								} 
+							</td>
+						</tr>
+					}
+				</table>
+				@{
+					int PrevPageNo = ViewBag.PageNo - 1;
+					if (PrevPageNo <= 0)
+					{
+						PrevPageNo = 1;
+					}
+					int NextPageNo = ViewBag.PageNo + 1;
+					if (NextPageNo > ViewBag.NoOfPages)
+					{
+						NextPageNo = ViewBag.NoOfPages;
+					}
+				}
+				<ul class="pagination justify-content-center">
+					<li class="page-item">
+						<a class="page-link"
+						   href="/Account/index?PageNo=@PrevPageNo">Previous</a>
+					</li>
+					@for (int j = 0; j < ViewBag.NoOfPages; j++)
+					{
+						if ((j + 1) == ViewBag.PageNo)
+						{
+							<li class="page-item active">
+								<a class="page-link"
+								   href="/Account/index?PageNo=@(j+1)">
+									@(j + 1)
+								</a>
+							</li>
+						}
+						else
+						{
+							<li class="page-item ">
+								<a class="page-link"
+								   href="/Account/index?PageNo=@(j+1)">
+									@(j + 1)
+								</a>
+							</li>
+						}
+					}
+					<li class="page-item">
+						<a class="page-link"
+						   href="/Account/index?PageNo=@NextPageNo">
+							Next
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<hr>
+	</div>
+}

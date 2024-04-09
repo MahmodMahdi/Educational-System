@@ -1,0 +1,119 @@
+﻿@model List<CourseResult>
+@{
+	var courseResult = Model;
+	Layout = "_Layout4";
+}
+@if (!Model.Any())
+{
+	<div class="alert alert-warning">Nothing added yet!</div>
+	@if (User.IsInRole("Admin") || User.IsInRole("Instructor"))
+	{
+		<div class="text-center ">
+			<a asp-action="Add" class="bi bi-pen btn btn-success">Add new Result</a>
+		</div>
+	}
+}
+else
+{
+	<div class="container-xl">
+		<div class="table-responsive">
+			<div class="table-wrapper">
+				<table class="table table-hover  table-bordered m-4 fw-bold table-striped" style="background-color:lightGray">
+					@if (User.IsInRole("Admin") || User.IsInRole("Instructor"))
+					{
+						<tr>
+							<th colspan="4"> <h2 style="color:darkRed">Manage Results</h2></th>
+							<th>
+								<div class="text-center">
+									<a asp-action="Search" class="btn fw-bold btn-outline-dark">Search</a>
+									<a asp-action="Add" class="bi bi-pen btn btn-success">Add new Result</a>
+								</div>
+
+							</th>
+						</tr>
+					}
+					<tr style="font-size:17px">
+						<th class="text-center">#</th>
+						<th class="text-center">Trainee</th>
+						<th class="text-center">Course</th>
+						<th class="text-center">Degree</th>
+						@if (User.IsInRole("Admin") || User.IsInRole("Instructor"))
+						{
+							<th colspan="2" class="text-center">Action</th>
+						}
+					</tr>
+					@for (int i = 0; i < courseResult.Count; i++)
+					{
+						<tr class="text-center">
+							<td>@(i+1)</td>
+							<td><a style="font-family:Courier New, Courier, monospace ;color:brown" asp-controller="Trainee" asp-action="Details" asp-route-id="@courseResult[i].Trainee?.Id">@courseResult[i].Trainee?.Name</a></td>
+							<td><a style="font-family:Courier New, Courier, monospace;;color:brown" asp-controller="Course" asp-action="Details" asp-route-id="@courseResult[i].Course?.Id" style="background-color:cadetblue">@courseResult[i].Course?.Name</a></td>
+
+							@if (courseResult[i].Degree >= 60)
+							{
+								<td style="color:darkgreen">@courseResult[i].Degree %</td>
+							}
+							else
+							{
+								<td style="color:red">@courseResult[i].Degree %</td>
+							}
+							<td>
+								@if (User.IsInRole("Admin") || User.IsInRole("Instructor"))
+								{
+									<a asp-action="Edit" asp-route-id="@courseResult[i].Id" class="bi bi-pencil btn btn-warning btn-sm" aria-hidden="true">Edit</a>
+									<a asp-action="Delete" asp-route-id="@courseResult[i].Id" asp-fragment="#" class="bi bi-trash btn btn-danger btn-sm" aria-hidden="true" onclick="return confirm('Are you Sure to delete ?')">Delete</a>
+								}
+							</td>
+						</tr>
+					}
+				</table>
+				@{
+					int PrevPageNo = ViewBag.PageNo - 1;
+					if (PrevPageNo <= 0)
+					{
+						PrevPageNo = 1;
+					}
+					int NextPageNo = ViewBag.PageNo + 1;
+					if (NextPageNo > ViewBag.NoOfPages)
+					{
+						NextPageNo = ViewBag.NoOfPages;
+					}
+				}
+				<ul class="pagination justify-content-center">
+					<li class="page-item">
+						<a class="page-link"
+						   href="/CourseResult/index?PageNo=@PrevPageNo">Previous</a>
+					</li>
+					@for (int j = 0; j < ViewBag.NoOfPages; j++)
+					{
+						if ((j + 1) == ViewBag.PageNo)
+						{
+							<li class="page-item active">
+								<a class="page-link"
+								   href="/CourseResult/index?PageNo=@(j+1)">
+									@(j + 1)
+								</a>
+							</li>
+						}
+						else
+						{
+							<li class="page-item ">
+								<a class="page-link"
+								   href="/CourseResult/index?PageNo=@(j+1)">
+									@(j + 1)
+								</a>
+							</li>
+						}
+					}
+					<li class="page-item">
+						<a class="page-link"
+						   href="/CourseResult/index?PageNo=@NextPageNo">
+							Next
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+}
+			﻿
