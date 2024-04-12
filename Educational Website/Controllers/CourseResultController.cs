@@ -33,7 +33,8 @@ namespace Educational_Website.Controllers
 			ItemsList = ItemsList.Skip(NoOfRecordsToSkip).Take(NoOfRecordsPerPage).ToList();
 			return View(ItemsList);
 		}
-		[Authorize]
+		//	[Authorize]
+		[HttpGet]
 		public async Task<IActionResult> Results(int id)
 		{
 			var ItemsList = await _courseResultService.GetCourseResultAsync(id);

@@ -26,9 +26,11 @@ namespace BusinessLogicLayer.ViewModels
 		public string? Email { get; set; }
 		[Required(ErrorMessage = "*")]
 		[DataType(DataType.Password)]
+		[MinLength(8, ErrorMessage = "Password must be greater than 7 letters"), MaxLength(32, ErrorMessage = "Password must be  than 7 letters")]
 		public string? Password { get; set; }
 		[Required(ErrorMessage = "*")]
 		[DataType(DataType.Password)]
+
 		[Compare("Password")]
 		public string? ConfirmPassword { get; set; }
 	}

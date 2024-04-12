@@ -42,7 +42,8 @@ else
 					{
 						<tr class="text-center">
 							<td>@(i + 1)</td>
-							<td><a asp-controller="CourseResult" asp-action="Results" asp-fragment="#" asp-route-id="@Trainee[i]?.Id">@Trainee[i].Name</a></td>
+							@* <td><a asp-controller="CourseResult" asp-action="Results" asp-fragment="#" asp-route-id="@Trainee[i]?.Id">@Trainee[i].Name</a></td> *@
+							<td style="font-family:Courier New, Courier, monospace">@Trainee[i].Name</td>
 							<td>
 								<a asp-action="Details" asp-route-id="@Trainee[i].Id" class="bi bi-tag btn  btn-sm" style="background-color:cornflowerblue">Details</a>
 								@if (User.IsInRole("Admin"))

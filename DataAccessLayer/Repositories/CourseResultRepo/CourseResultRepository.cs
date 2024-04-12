@@ -29,7 +29,7 @@ namespace DataAccessLayer.Repositories.TraineeCoursesResultsRepo
 			var results = await context.CourseResult
 				.Include(x => x.Course)
 				.Include(x => x.Trainee)
-				.OrderBy(x => x.trainee_id)
+				.OrderBy(x => x.Trainee!.Name)
 				.ToListAsync();
 			return results;
 		}
@@ -72,7 +72,7 @@ namespace DataAccessLayer.Repositories.TraineeCoursesResultsRepo
 			var item = await context.CourseResult
 				.Include(x => x.Trainee)
 				.Include(x => x.Course)
-				.Where(x => x.Trainee!.Name!.StartsWith(SearchString))
+				.Where(x => x.Trainee!.Name!.StartsWith(SearchString) || x.Course!.Name!.StartsWith(SearchString))
 				.ToListAsync();
 			return item!;
 		}
