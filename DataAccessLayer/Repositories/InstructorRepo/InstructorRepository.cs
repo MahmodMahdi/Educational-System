@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DataAccessLayer.Data;
+﻿using DataAccessLayer.Data;
 using DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 namespace DataAccessLayer.Repositories.InstructorRepo
@@ -7,12 +6,12 @@ namespace DataAccessLayer.Repositories.InstructorRepo
 	public class InstructorRepository : IInstructorRepository
 	{
 		private readonly ApplicationDbContext context;
-		private readonly IMapper _mapper;
+		//private readonly IMapper _mapper;
 
-		public InstructorRepository(ApplicationDbContext db, IMapper mapper)
+		public InstructorRepository(ApplicationDbContext db/*, IMapper mapper*/)
 		{
 			context = db;
-			_mapper = mapper;
+			//_mapper = mapper;
 		}
 
 		public async Task<List<Instructor>> GetAllAsync()
@@ -43,7 +42,13 @@ namespace DataAccessLayer.Repositories.InstructorRepo
 			var oldInstructor = await context.Instructors.FirstOrDefaultAsync(c => c.Id == instructor.Id);
 			if (oldInstructor != null)
 			{
-				_mapper.Map<Instructor>(instructor);
+				//_mapper.Map<Instructor>(instructor);
+				oldInstructor.Name = instructor.Name;
+				oldInstructor.Address = instructor.Address;
+				oldInstructor.PhoneNumber = instructor.PhoneNumber;
+				oldInstructor.ImageUrl = instructor.ImageUrl;
+				oldInstructor.crs_id = instructor.crs_id;
+				oldInstructor.dept_id = instructor.dept_id;
 			}
 			await context.SaveChangesAsync();
 		}

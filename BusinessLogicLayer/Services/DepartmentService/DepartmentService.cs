@@ -1,27 +1,27 @@
 ﻿using AutoMapper;
 using DataAccessLayer.Entities;
-using DataAccessLayer.Repositories.DepartmentRepo;
+using DataAccessLayer.UnitofWork;
 using Educational_Website.ViewModels;
 namespace BusinessLogicLayer.Services.DepartmentService
 {
 	public class DepartmentService : IDepartmentService
 	{
-		private readonly IDepartmentRepository _departmentRepository;
 		private readonly IMapper _mapper;
-		public DepartmentService(IDepartmentRepository departmentRepository, IMapper mapper)
+		private readonly IUnitOfWork _unitOfWork;
+		public DepartmentService(IMapper mapper, IUnitOfWork unitOfWork)
 		{
-			_departmentRepository = departmentRepository;
 			_mapper = mapper;
+			_unitOfWork = unitOfWork;
 		}
 
 		public async Task<List<Department>> GetDepartmentsAsync()
 		{
-			return await _departmentRepository.GetDepartmentsAsync();
+			return await _unitOfWork.Department.GetDepartmentsAsync();
 		}
 
 		public async Task<Department> GetDepartmentAsync(int? id)
 		{
-			return await _departmentRepository.GetDepartmentAsync(id);
+			return await _unitOfWork.Department.GetDepartmentAsync(id);
 		}
 
 		public async Task AddDepartmentAsync(DepartmentViewModel departmentVM)
@@ -32,30 +32,30 @@ namespace BusinessLogicLayer.Services.DepartmentService
 			//    DeptManager = departmentVM.DeptManager
 			//};
 			var department = _mapper.Map<Department>(departmentVM);
-			await _departmentRepository.AddDepartmentAsync(department);
-			await _departmentRepository.SaveChangesAsync();
+			await _unitOfWork.Department.AddDepartmentAsync(department);
+			await _unitOfWork.CompleteAsync();
 		}
 
 		public async Task UpdateDepartmentAsync(DepartmentViewModel departmentVM)
 		{
-			var department = await _departmentRepository.GetDepartmentAsync(departmentVM.Id);
+			var department = await _unitOfWork.Department.GetDepartmentAsync(departmentVM.Id);
 			//department.Id = departmentVM.Id;
 			//department.Name = departmentVM.Name;
 			//department.DeptManager = departmentVM.DeptManager;
 			_mapper.Map(departmentVM, department);
-			await _departmentRepository.UpdateDepartmentAsync(department);
-			await _departmentRepository.SaveChangesAsync();
+			await _unitOfWork.Department.UpdateDepartmentAsync(department);
+			await _unitOfWork.CompleteAsync();
 		}
 
 		public async Task DeleteDepartmentAsync(int id)
 		{
-			await _departmentRepository.DeleteDepartmentAsync(id);
-			await _departmentRepository.SaveChangesAsync();
+			await _unitOfWork.Department.DeleteDepartmentAsync(id);
+			await _unitOfWork.CompleteAsync();
 		}
 
 		public async Task<List<Department>> SearchDepartmentAsync(string SearchString)
 		{
-			return await _departmentRepository.SearchDepartmentAsync(SearchString);
+			return await _unitOfWork.Department.SearchDepartmentAsync(SearchString);
 		}
 
 	}

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DataAccessLayer.Data;
+﻿using DataAccessLayer.Data;
 using DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 namespace DataAccessLayer.Repositories.TraineeCoursesResultsRepo
@@ -7,11 +6,11 @@ namespace DataAccessLayer.Repositories.TraineeCoursesResultsRepo
 	public class CourseResultRepository : ICourseResultRepository
 	{
 		private readonly ApplicationDbContext context;
-		private readonly IMapper _mapper;
-		public CourseResultRepository(ApplicationDbContext db, IMapper mapper)
+		//	private readonly IMapper _mapper;
+		public CourseResultRepository(ApplicationDbContext db/*, IMapper mapper*/)
 		{
 			context = db;
-			_mapper = mapper;
+			//	_mapper = mapper;
 		}
 
 		public async Task<List<CourseResult>> GetResultsByIdAsync(int id)
@@ -54,7 +53,10 @@ namespace DataAccessLayer.Repositories.TraineeCoursesResultsRepo
 			var result = await context.CourseResult.FirstOrDefaultAsync(c => c.Id == courseResult.Id);
 			if (result != null)
 			{
-				_mapper.Map<CourseResult>(courseResult);
+				//_mapper.Map<CourseResult>(courseResult);
+				result.Degree = courseResult.Degree;
+				result.crs_id = courseResult.crs_id;
+				result.trainee_id = courseResult.trainee_id;
 			}
 			await context.SaveChangesAsync();
 		}

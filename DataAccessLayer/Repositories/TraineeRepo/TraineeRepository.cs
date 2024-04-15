@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DataAccessLayer.Data;
+﻿using DataAccessLayer.Data;
 using DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 namespace DataAccessLayer.Repositories.TraineeRepo
@@ -7,11 +6,11 @@ namespace DataAccessLayer.Repositories.TraineeRepo
 	public class TraineeRepository : ITraineeRepository
 	{
 		private readonly ApplicationDbContext context;
-		private readonly IMapper _mapper;
-		public TraineeRepository(ApplicationDbContext db, IMapper mapper)
+		//	private readonly IMapper _mapper;
+		public TraineeRepository(ApplicationDbContext db/*, IMapper mapper*/)
 		{
 			context = db;
-			_mapper = mapper;
+			//_mapper = mapper;
 		}
 
 		public async Task<List<Trainee>> GetAllAsync()
@@ -41,13 +40,13 @@ namespace DataAccessLayer.Repositories.TraineeRepo
 			var oldTrainee = await context.Trainees.FirstOrDefaultAsync(c => c.Id == trainee.Id);
 			if (oldTrainee != null)
 			{
-				_mapper.Map<Trainee>(trainee);
-				//oldTrainee.Name = trainee.Name;
-				//oldTrainee.Address = trainee.Address;
-				//oldTrainee.Level = trainee.Level;
-				//oldTrainee.PhoneNumber = trainee.PhoneNumber;
-				//oldTrainee.ImageUrl = trainee.ImageUrl;
-				//oldTrainee.dept_id = trainee.dept_id;
+				//_mapper.Map<Trainee>(trainee);
+				oldTrainee.Name = trainee.Name;
+				oldTrainee.Address = trainee.Address;
+				oldTrainee.Level = trainee.Level;
+				oldTrainee.PhoneNumber = trainee.PhoneNumber;
+				oldTrainee.ImageUrl = trainee.ImageUrl;
+				oldTrainee.dept_id = trainee.dept_id;
 			}
 			await context.SaveChangesAsync();
 		}

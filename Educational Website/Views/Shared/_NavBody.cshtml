@@ -18,15 +18,14 @@
                 <li class="nav-item">
                     <a class="nav-link btn btn-outline-primary" asp-controller="Course" asp-action="Index">Courses</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-outline-primary" asp-controller="CourseResult" asp-action="Index">Results</a>
-                </li>
-                @if (User.IsInRole("Admin") || User.IsInRole("Instructor"))
+                 @if (User.IsInRole("Admin") || User.IsInRole("Instructor"))
                 {
                     <li class="nav-item">
                         <a class="nav-link btn btn-outline-primary" asp-controller="Trainee" asp-action="Index">Trainees</a>
                     </li>
-                  
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-primary" asp-controller="CourseResult" asp-action="Index">Results</a>
+                    </li>
                 }
                 @if (User.IsInRole("Admin"))
                 {

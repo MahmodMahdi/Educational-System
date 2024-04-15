@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DataAccessLayer.Data;
+﻿using DataAccessLayer.Data;
 using DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,11 +7,11 @@ namespace DataAccessLayer.Repositories.DepartmentRepo
 	public class DepartmentRepository : IDepartmentRepository
 	{
 		private readonly ApplicationDbContext context;
-		private readonly IMapper _mapper;
-		public DepartmentRepository(ApplicationDbContext db, IMapper mapper)
+		//	private readonly IMapper _mapper;
+		public DepartmentRepository(ApplicationDbContext db/*, IMapper mapper*/)
 		{
 			context = db;
-			_mapper = mapper;
+			//_mapper = mapper;
 		}
 
 		public async Task<List<Department>> GetDepartmentsAsync()
@@ -40,7 +39,9 @@ namespace DataAccessLayer.Repositories.DepartmentRepo
 			var oldDepartment = await context.Departments.FirstOrDefaultAsync(c => c.Id == department.Id);
 			if (oldDepartment != null)
 			{
-				_mapper.Map<Department>(department);
+				//_mapper.Map<Department>(department);
+				oldDepartment.Name = department.Name;
+				oldDepartment.DeptManager = department.DeptManager;
 			}
 			await context.SaveChangesAsync();
 		}
