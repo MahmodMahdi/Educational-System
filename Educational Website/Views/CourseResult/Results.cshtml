@@ -32,7 +32,7 @@ else
 					<td style="font-family:Courier New, Courier, monospace">@(courseResult[i]?.Course?.Name ?? "Not Assign")</td>
 					@if (courseResult[i].Degree >= 60)
 					{
-						<td style="color:forestGreen">@courseResult[i].Degree%</td>
+						<td style="color:forestgreen">@courseResult[i].Degree%</td>
 					}
 					else
 					{
@@ -42,9 +42,6 @@ else
 			}
 
 		</table>
-		<div class="card-footer text-center">
-			<a asp-action="Index" asp-fragment="#" class="btn btn-primary w-25">Return Back</a>
-		</div>
 		<hr>
 	</div>
 }

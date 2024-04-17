@@ -8,7 +8,7 @@
 	<h1 class="text-center border border-3 bg-dark" style="color:lightsteelblue">Selected Item</h1>
 	<div class="card shadow" style=" background-color:lightgray">
 		<div class="card-body text-center shadow">
-			@if (User.IsInRole("Admin"))
+			@if (User.IsInRole("Admin") || User.IsInRole("Instructor"))
 			{
 				<img class="align-self-center shadow" src="~/@trainee.ImageUrl" style="width:250px;margin-top:5px;border-radius:30px;" />
 			}

@@ -22,7 +22,7 @@ else
 					@if (User.IsInRole("Admin") || User.IsInRole("Instructor"))
 					{
 						<tr>
-							<th colspan="4"> <h2 style="color:darkRed">Manage Results</h2></th>
+							<th colspan="4"> <h2 style="color:blue">Manage Results</h2></th>
 							<th>
 								<div class="text-center">
 									<a asp-action="Search" class="btn fw-bold btn-outline-dark">Search</a>
@@ -32,7 +32,7 @@ else
 							</th>
 						</tr>
 					}
-					<tr style="font-size:17px">
+					<tr style="font-size:17px; background-color:steelblue" class="text-white">
 						<th class="text-center">#</th>
 						<th class="text-center">Trainee</th>
 						<th class="text-center">Course</th>
@@ -46,8 +46,8 @@ else
 					{
 						<tr class="text-center">
 							<td>@(i+1)</td>
-							<td><a style="font-family:Courier New, Courier, monospace ;color:brown" asp-controller="Trainee" asp-action="Details" asp-route-id="@courseResult[i].Trainee?.Id">@courseResult[i].Trainee?.Name</a></td>
-							<td><a style="font-family:Courier New, Courier, monospace;;color:brown" asp-controller="Course" asp-action="Details" asp-route-id="@courseResult[i].Course?.Id" style="background-color:cadetblue">@courseResult[i].Course?.Name</a></td>
+							<td><a style="font-family:Courier New, Courier, monospace ;color:blue" asp-controller="Trainee" asp-action="Details" asp-route-id="@courseResult[i].Trainee?.Id">@courseResult[i].Trainee?.Name</a></td>
+							<td><a style="font-family:Courier New, Courier, monospace;;color:blue" asp-controller="Course" asp-action="Details" asp-route-id="@courseResult[i].Course?.Id" style="background-color:cadetblue">@courseResult[i].Course?.Name</a></td>
 
 							@if (courseResult[i].Degree >= 60)
 							{
