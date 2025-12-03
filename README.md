@@ -47,3 +47,5 @@
 - Using Ajax Calling
 
 - Using monsterasp.net for Publishing the project ==> <a href= "https://educationalsystem.runasp.net/Account/Login?ReturnUrl=%2FDepartment%2FIndex">'Click Here For Demo'</a>
+
+- Try Login as Admin ( Email: Mahmoud2@gmail.com   Pass: Mahmoud2 ) - Login as Instructor ( Email: Mahmoud3@gmail.com   Pass: Mahmoud3 )
